@@ -1,6 +1,7 @@
 package worldcup;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,28 +27,49 @@ public class scoreboardTests {
 
     @Test
     public void testStartingScore() {
-        assertEquals(scoreboard.getNumberOfMatches(), 2, "Matches is not added to the scoreboard correctly.");
+        assertEquals(2, scoreboard.getNumberOfMatches(), "Matches is not added to the scoreboard correctly.");
 
-        assertEquals(scoreboard.getMatch(1).getScore(), new ArrayList<>(List.of(0, 0)),
+        assertEquals(new ArrayList<>(List.of(0, 0)), scoreboard.getMatch(1).getScore(),
                 "The initial score of a match is not 0-0.");
     }
 
     @Test
     public void testEmptyTeamNames() {
-        assertEquals(scoreboard.getNumberOfMatches(), 2);
-        // home team name is forgotten
-        scoreboard.addMatch(new Match("", "Japan"));
-        assertEquals(scoreboard.getNumberOfMatches(), 2,
+        assertEquals(2, scoreboard.getNumberOfMatches(), "Number of matches should be 2.");
+        try {
+            // home team name is forgotten
+            scoreboard.addMatch(new Match("", "Japan"));
+            fail("Exception should have been thrown when home team name is empty.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
+                    "The error message is not correct.");
+        }
+
+        assertEquals(2, scoreboard.getNumberOfMatches(),
                 "A match shouldn't be added to scoreboard without both team names.");
 
-        // away team name is forgotten
-        scoreboard.addMatch(new Match("England", ""));
-        assertEquals(scoreboard.getNumberOfMatches(), 2,
+        try {
+            // away team name is forgotten
+            scoreboard.addMatch(new Match("England", ""));
+            fail("Exception should have been thrown when away team name is empty.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
+                    "The error message is not correct.");
+        }
+
+        assertEquals(2, scoreboard.getNumberOfMatches(),
                 "A match shouldn't be added to scoreboard without both team names.");
 
-        // both team names is forgotten
-        scoreboard.addMatch(new Match("", ""));
-        assertEquals(scoreboard.getNumberOfMatches(), 2,
+        try {
+            // both team names is forgotten
+            scoreboard.addMatch(new Match("", ""));
+            fail("Exception should have been thrown when both team names is empty.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
+                    "The error message is not correct.");
+        }
+
+        assertEquals(2, scoreboard.getNumberOfMatches(),
                 "A match shouldn't be added to scoreboard without both team names.");
 
     }
@@ -99,8 +121,11 @@ public class scoreboardTests {
         assertEquals(3, scoreboard.getMatch(1).getScoreSum(), "getScoreSum() doesn't return the correct sum.");
         assertEquals(2, scoreboard.getMatch(2).getScoreSum(), "getScoreSum() doesn't return the correct sum.");
 
+        assertEquals(2, scoreboard.getScoreBoard().getNumberOfMatches(), "The number of matches should be 2.");
         assertEquals(new ArrayList<>(List.of(match1, match2)),
-                scoreboard.getScoreBoard(), "The match with the highest total number of goals should be placed first.");
+                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatch(1),
+                        scoreboard.getScoreBoard().getMatch(2))),
+                "The match with the highest total number of goals should be placed first.");
 
         // Portugal scores against France
         scoreboard.getMatch(2).homeTeamScores();
@@ -114,7 +139,9 @@ public class scoreboardTests {
         // now it's a tie (both matches have 3 goals), and since Portugal-France is
         // newer it should be placed first in the list
         assertEquals(new ArrayList<>(List.of(match2, match1)),
-                scoreboard.getScoreBoard(), "When it's a tie, the newest game should be placed first.");
+                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatch(1),
+                        scoreboard.getScoreBoard().getMatch(2))),
+                "When it's a tie, the newest game should be placed first.");
 
         // Spain scores against Denmark
         scoreboard.getMatch(1).homeTeamScores();
@@ -125,9 +152,11 @@ public class scoreboardTests {
          * Portugal (2) - France (1)
          */
         assertEquals(new ArrayList<>(List.of(match1, match2)),
-                scoreboard.getScoreBoard(), "The match with the highest total number of goals should be placed first.");
-        private Match match3 = new Match("Netherlands", "Poland")
-        scoreboard.addMatch();
+                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatch(1),
+                        scoreboard.getScoreBoard().getMatch(2))),
+                "The match with the highest total number of goals should be placed first.");
+        Match match3 = new Match("Netherlands", "Poland");
+        scoreboard.addMatch(match3);
 
         /*
          * The scores at this point:
@@ -135,8 +164,11 @@ public class scoreboardTests {
          * Portugal (2) - France (1)
          * Netherlands (0) - Poland (0)
          */
-        assertEquals(new ArrayList<>(List.of(match1, match2)),
-                scoreboard.getScoreBoard(), "The match with the highest total number of goals should be placed first.");
+        assertEquals(new ArrayList<>(List.of(match1, match2, match3)),
+                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatch(1),
+                        scoreboard.getScoreBoard().getMatch(2),
+                        scoreboard.getScoreBoard().getMatch(3))),
+                "The match with the highest total number of goals should be placed first.");
     }
 
 }
