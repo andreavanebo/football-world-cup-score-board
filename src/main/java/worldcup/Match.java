@@ -10,7 +10,8 @@ public class Match {
     private int awayTeamPoints;
 
     public Match(String homeTeam, String awayTeam) {
-        if (homeTeam != "" && awayTeam != "") {
+        if (!homeTeam.equals("") && !awayTeam.equals("") && homeTeam.trim().length() > 0
+                && awayTeam.trim().length() > 0) {
             if (homeTeam != awayTeam) {
                 this.homeTeam = homeTeam;
                 this.awayTeam = awayTeam;

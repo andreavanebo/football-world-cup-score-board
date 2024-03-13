@@ -60,8 +60,8 @@
       <Line endX="348.3333435058594" endY="-0.207122802734375" layoutX="111.0" layoutY="344.0" startX="-97.00000762939453" />
       <Line endX="-241.16668701171875" endY="-36.70710754394531" layoutX="700.0" layoutY="380.0" startX="-241.16668701171875" startY="-114.33332824707031" />
       <TextArea fx:id="scoreBoardOutputArea" layoutX="20.0" layoutY="390.0" prefHeight="279.0" prefWidth="303.0" />
-      <Text fx:id="errorFieldStartNewMatch" fill="RED" layoutX="389.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="183.333984375" />
-      <Text fx:id="errorFieldAddGoal" fill="RED" layoutX="160.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="213.91152954101557" />
-      <Text fx:id="errorFieldStopMatch" fill="RED" layoutX="223.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.80332946777344" />
+      <Text fx:id="errorFieldStartNewMatch" fill="RED" layoutX="295.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="303.33333333333337" />
+      <Text fx:id="errorFieldAddGoal" fill="RED" layoutX="115.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="261.2449111938476" />
+      <Text fx:id="errorFieldStopMatch" fill="RED" layoutX="143.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="303.33333333333337" />
    </children>
 </AnchorPane>
