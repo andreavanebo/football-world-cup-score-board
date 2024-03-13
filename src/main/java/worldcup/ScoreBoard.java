@@ -15,7 +15,8 @@ public class ScoreBoard {
     public Match getMatch(String nameOfTeam) {
         for (int i = 0; i < this.scoreboardList.size(); i++) {
             Match match = this.scoreboardList.get(i);
-            if (match.getHomeTeam().equals(nameOfTeam) || match.getAwayTeam().equals(nameOfTeam)) {
+            if (match.getHomeTeam().toLowerCase().equals(nameOfTeam.toLowerCase())
+                    || match.getAwayTeam().toLowerCase().equals(nameOfTeam.toLowerCase())) {
                 return match;
             }
         }
@@ -35,7 +36,6 @@ public class ScoreBoard {
         if (getMatch(match.getHomeTeam()) == null && getMatch(match.getAwayTeam()) == null) {
             this.scoreboardList.add(match);
         } else {
-            // TODO: add information text in application
             throw new IllegalArgumentException("Team already in the scoreboard.");
         }
 

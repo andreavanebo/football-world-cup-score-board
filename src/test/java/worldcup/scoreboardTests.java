@@ -38,12 +38,25 @@ public class scoreboardTests {
         assertEquals(match1, this.scoreboard.getMatch("Denmark"), "Should be match1");
         assertEquals(match2, this.scoreboard.getMatch("Portugal"), "Should be match2");
         assertEquals(match2, this.scoreboard.getMatch("France"), "Should be match2");
+    }
 
+    @Test
+    public void testGetMatchNotInScoreBoard() {
         // trying to get a match which is not in the scoreboard
         assertEquals(null, this.scoreboard.getMatch("Norway"),
                 "Should return null when trying to get a match that does not exist.");
         assertEquals(null, this.scoreboard.getMatch(""),
                 "Should return null when trying to get a match with empty input.");
+    }
+
+    @Test
+    public void testGetMatchWithLowerCase() {
+        // to check that the application do not differenciate between lower case and
+        // upper case
+        assertEquals(match1, this.scoreboard.getMatch("spain"));
+        assertEquals(match1, this.scoreboard.getMatch("SPAIN"));
+        assertEquals(match1, this.scoreboard.getMatch("SpAiN"));
+
     }
 
     @Test
