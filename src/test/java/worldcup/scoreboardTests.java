@@ -26,52 +26,38 @@ public class scoreboardTests {
     }
 
     @Test
-    public void testStartingScore() {
-        assertEquals(2, scoreboard.getNumberOfMatches(), "Matches is not added to the scoreboard correctly.");
-
-        assertEquals(new ArrayList<>(List.of(0, 0)), scoreboard.getMatch("Spain").getScore(),
-                "The initial score of a match is not 0-0.");
+    public void testScoreBoardConstructor() {
+        ScoreBoard scoreboard = new ScoreBoard();
+        assertEquals(0, scoreboard.getNumberOfMatches(), "Initially it shouldn't be any matches in the scoreboard.");
     }
 
     @Test
-    public void testEmptyTeamNames() {
-        assertEquals(2, scoreboard.getNumberOfMatches(), "Number of matches should be 2.");
-        try {
-            // home team name is forgotten
-            Match match = new Match("", "Japan");
-            fail("Exception should have been thrown when home team name is empty.");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
-                    "The error message is not correct.");
-        }
+    public void testGetMatch() {
+        // trying to get a match which actually exists
+        assertEquals(match1, this.scoreboard.getMatch("Spain"), "Should be match1");
+        assertEquals(match1, this.scoreboard.getMatch("Denmark"), "Should be match1");
+        assertEquals(match2, this.scoreboard.getMatch("Portugal"), "Should be match2");
+        assertEquals(match2, this.scoreboard.getMatch("France"), "Should be match2");
 
-        assertEquals(2, scoreboard.getNumberOfMatches(),
-                "A match shouldn't be added to scoreboard without both team names.");
+        // trying to get a match which is not in the scoreboard
+        assertEquals(null, this.scoreboard.getMatch("Norway"),
+                "Should return null when trying to get a match that does not exist.");
+        assertEquals(null, this.scoreboard.getMatch(""),
+                "Should return null when trying to get a match with empty input.");
+    }
 
-        try {
-            // away team name is forgotten
-            Match match = new Match("England", "");
-            fail("Exception should have been thrown when away team name is empty.");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
-                    "The error message is not correct.");
-        }
+    @Test
+    public void testGetMatchOnIndex() {
+        assertEquals(match1, this.scoreboard.getMatchOnIndex(0), "Should be match1");
+        assertEquals(match2, this.scoreboard.getMatchOnIndex(1), "Should be match2.");
+    }
 
-        assertEquals(2, scoreboard.getNumberOfMatches(),
-                "A match shouldn't be added to scoreboard without both team names.");
-
-        try {
-            // both team names is forgotten
-            Match match = new Match("", "");
-            fail("Exception should have been thrown when both team names is empty.");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Both home team and away team need to have a name.", e.getMessage(),
-                    "The error message is not correct.");
-        }
-
-        assertEquals(2, scoreboard.getNumberOfMatches(),
-                "A match shouldn't be added to scoreboard without both team names.");
-
+    @Test
+    public void testAddMatch() {
+        Match match3 = new Match("Norway", "Italy");
+        this.scoreboard.addMatch(match3);
+        assertEquals(3, this.scoreboard.getNumberOfMatches(),
+                "The new match should have been added to the scoreboard.");
     }
 
     @Test
@@ -80,6 +66,7 @@ public class scoreboardTests {
         Match match3 = new Match("Spain", "England");
         Match match4 = new Match("Norway", "Portugal");
         Match match5 = new Match("Portugal", "France");
+
         // but it should not be allowed to add them to the scoreboard
         try {
             this.scoreboard.addMatch(match3);
@@ -88,6 +75,7 @@ public class scoreboardTests {
             assertEquals("Team already in the scoreboard.", e.getMessage(),
                     "The error message is not correct.");
         }
+
         try {
             this.scoreboard.addMatch(match4);
             fail("Should have thrown exception.");
@@ -95,6 +83,7 @@ public class scoreboardTests {
             assertEquals("Team already in the scoreboard.", e.getMessage(),
                     "The error message is not correct.");
         }
+
         try {
             this.scoreboard.addMatch(match5);
             fail("Should have thrown exception.");
@@ -102,22 +91,33 @@ public class scoreboardTests {
             assertEquals("Team already in the scoreboard.", e.getMessage(),
                     "The error message is not correct.");
         }
+
         assertEquals(2, this.scoreboard.getNumberOfMatches(),
                 "Matches which includes already playing teams shouldn't be added to the scoreboard.");
     }
 
     @Test
-    public void testGetMatch() {
-        // trying to get a match which actually exists
-        assertEquals(match2, this.scoreboard.getMatch("Portugal"));
-        assertEquals(match2, this.scoreboard.getMatch("France"));
-
-        // trying to get a match which is not in the scoreboard
-        assertEquals(null, this.scoreboard.getMatch("Norway"));
+    public void testStopMatch() {
+        assertEquals(2, scoreboard.getNumberOfMatches(), "The number of matches should be 2 after the setup.");
+        scoreboard.stopMatch("Spain");
+        assertEquals(1, scoreboard.getNumberOfMatches(), "The match is not removed from the scoreboard.");
+        scoreboard.stopMatch("France");
+        assertEquals(0, scoreboard.getNumberOfMatches(), "The match is not removed from the scoreboard.");
     }
 
     @Test
-    public void testUpdateScore() {
+    public void testStopNotExistingMatch() {
+        try {
+            scoreboard.stopMatch("Norway");
+            fail("Should have thrown an exception.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("It is no ongoing match with the given team name Norway", e.getMessage(),
+                    "The error message is not correct.");
+        }
+    }
+
+    @Test
+    public void testUpdateScoreThroughScoreboard() {
         assertEquals(new ArrayList<>(List.of(0, 0)), scoreboard.getMatch("Spain").getScore(),
                 "The initial score of a match is not 0-0.");
         scoreboard.getMatch("Spain").homeTeamScores();
@@ -129,15 +129,6 @@ public class scoreboardTests {
         scoreboard.getMatch("Spain").awayTeamScores();
         assertEquals(new ArrayList<>(List.of(2, 1)), scoreboard.getMatch("Spain").getScore(),
                 "awayTeamScores() doesn't work as expected.");
-    }
-
-    @Test
-    public void testStopMatch() {
-        assertEquals(2, scoreboard.getNumberOfMatches(), "The number of matches should be 2 after the setup.");
-        scoreboard.stopMatch("Spain");
-        assertEquals(1, scoreboard.getNumberOfMatches(), "The match is not removed from the scoreboard.");
-        scoreboard.stopMatch("France");
-        assertEquals(0, scoreboard.getNumberOfMatches(), "The match is not removed from the scoreboard.");
     }
 
     @Test
@@ -165,8 +156,8 @@ public class scoreboardTests {
 
         assertEquals(2, scoreboard.getScoreBoard().getNumberOfMatches(), "The number of matches should be 2.");
         assertEquals(new ArrayList<>(List.of(match1, match2)),
-                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatch("Spain"),
-                        scoreboard.getScoreBoard().getMatch("Portugal"))),
+                new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatchOnIndex(0),
+                        scoreboard.getScoreBoard().getMatchOnIndex(1))),
                 "The match with the highest total number of goals should be placed first.");
 
         // Portugal scores against France
@@ -174,8 +165,8 @@ public class scoreboardTests {
 
         /*
          * The scores at this point:
-         * Spain (1) - Denmark (2)
          * Portugal (2) - France (1)
+         * Spain (1) - Denmark (2)
          */
 
         // now it's a tie (both matches have 3 goals), and since Portugal-France is
@@ -197,6 +188,8 @@ public class scoreboardTests {
                 new ArrayList<>(List.of(scoreboard.getScoreBoard().getMatchOnIndex(0),
                         scoreboard.getScoreBoard().getMatchOnIndex(1))),
                 "The match with the highest total number of goals should be placed first.");
+
+        // a new match is added to the scoreboard
         Match match3 = new Match("Netherlands", "Poland");
         scoreboard.addMatch(match3);
 
@@ -211,6 +204,13 @@ public class scoreboardTests {
                         scoreboard.getScoreBoard().getMatchOnIndex(1),
                         scoreboard.getScoreBoard().getMatchOnIndex(2))),
                 "The match with the highest total number of goals should be placed first.");
+    }
+
+    @Test
+    public void testGetScoreBoardText() {
+        this.scoreboard.getMatch("Spain").awayTeamScores();
+        assertEquals("Spain(0) - Denmark(1)\nPortugal(0) - France(0)", this.scoreboard.getScoreBoardText(),
+                "The score board string is not correct.");
     }
 
 }
