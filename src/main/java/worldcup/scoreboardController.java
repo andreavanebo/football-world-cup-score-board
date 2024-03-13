@@ -53,6 +53,9 @@ public class scoreboardController {
             try {
                 this.scoreBoard.addMatch(match);
                 updateScoreBoard();
+                startMatchHomeTeamInput.setText("");
+                startMatchAwayTeamInput.setText("");
+                errorFieldStartNewMatch.setText("");
             } catch (IllegalArgumentException e) {
                 errorFieldStartNewMatch.setText("At least one of the given teams are in an ongoing match.");
             }
@@ -73,6 +76,9 @@ public class scoreboardController {
             } else {
                 match.awayTeamScores();
             }
+            updateScoreBoard();
+            addGoalScoringTeamInput.setText("");
+            errorFieldAddGoal.setText("");
         } else {
             errorFieldAddGoal.setText("There is no ongoing match with the team " + teamName);
         }
@@ -81,9 +87,12 @@ public class scoreboardController {
 
     @FXML
     private void stopMatchButtonOnClick() {
-        String teamName = addGoalScoringTeamInput.getText();
+        String teamName = stopMatchTeamInput.getText();
         try {
             this.scoreBoard.stopMatch(teamName);
+            updateScoreBoard();
+            stopMatchTeamInput.setText("");
+            errorFieldStopMatch.setText("");
         } catch (IllegalArgumentException e) {
             errorFieldStopMatch.setText("There is no ongoing match with the team " + teamName);
         }
