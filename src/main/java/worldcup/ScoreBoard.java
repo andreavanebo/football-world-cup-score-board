@@ -33,14 +33,10 @@ public class ScoreBoard {
     public void addMatch(Match match) {
         // check that there is no ongoing games with eighter of the teams
         if (getMatch(match.getHomeTeam()) == null && getMatch(match.getAwayTeam()) == null) {
-            try {
-                this.scoreboardList.add(match);
-            } catch (IllegalArgumentException e) {
-                // the match need both a home team name and a away team name.
-                // TODO: add information text in application
-            }
+            this.scoreboardList.add(match);
         } else {
             // TODO: add information text in application
+            throw new IllegalArgumentException("Team already in the scoreboard.");
         }
 
     }
@@ -60,12 +56,21 @@ public class ScoreBoard {
         return result;
     }
 
+    public String getScoreBoardText() {
+        ScoreBoard orderedScoreBoard = getScoreBoard();
+        String resultString = "";
+        for (int i = 0; i < getNumberOfMatches(); i++) {
+            resultString += orderedScoreBoard.getMatchOnIndex(i).getMatchString() + "\n";
+        }
+        return resultString;
+    }
+
     public void stopMatch(String nameOfTeam) {
         Match matchToStop = getMatch(nameOfTeam);
         if (matchToStop != null) {
             this.scoreboardList.remove(matchToStop);
         } else {
-            // TODO: add information text in application
+            throw new IllegalArgumentException("It is no ongoing match with the given team name.");
         }
     }
 

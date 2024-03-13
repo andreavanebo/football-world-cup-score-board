@@ -80,10 +80,28 @@ public class scoreboardTests {
         Match match3 = new Match("Spain", "England");
         Match match4 = new Match("Norway", "Portugal");
         Match match5 = new Match("Portugal", "France");
-        // but it should be allowed to add them to the scoreboard
-        this.scoreboard.addMatch(match3);
-        this.scoreboard.addMatch(match4);
-        this.scoreboard.addMatch(match5);
+        // but it should not be allowed to add them to the scoreboard
+        try {
+            this.scoreboard.addMatch(match3);
+            fail("Should have thrown exception.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Team already in the scoreboard.", e.getMessage(),
+                    "The error message is not correct.");
+        }
+        try {
+            this.scoreboard.addMatch(match4);
+            fail("Should have thrown exception.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Team already in the scoreboard.", e.getMessage(),
+                    "The error message is not correct.");
+        }
+        try {
+            this.scoreboard.addMatch(match5);
+            fail("Should have thrown exception.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Team already in the scoreboard.", e.getMessage(),
+                    "The error message is not correct.");
+        }
         assertEquals(2, this.scoreboard.getNumberOfMatches(),
                 "Matches which includes already playing teams shouldn't be added to the scoreboard.");
     }
