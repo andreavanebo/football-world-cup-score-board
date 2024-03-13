@@ -7,24 +7,40 @@ import java.util.List;
 public class ScoreBoard {
 
     private List<Match> scoreboardList;
-    private int scoreboardId;
-    private int idCounter = 1;
 
     public ScoreBoard() {
-        this.scoreboardId = idCounter;
-        idCounter += 1;
         this.scoreboardList = new ArrayList<>();
     }
 
-    public Match getMatch(int numberInList) {
-        return this.scoreboardList.get(numberInList - 1);
+    public Match getMatch(String nameOfTeam) {
+        for (int i = 0; i < this.scoreboardList.size(); i++) {
+            Match match = this.scoreboardList.get(i);
+            if (match.getHomeTeam().equals(nameOfTeam) || match.getAwayTeam().equals(nameOfTeam)) {
+                return match;
+            }
+        }
+        return null;
+    }
+
+    public Match getMatchOnIndex(int index){
+        if(index<this.scoreboardList.size()){
+            return this.scoreboardList.get(index);
+        } else{
+            return null;
+        }
     }
 
     public void addMatch(Match match) {
-        try {
-            this.scoreboardList.add(match);
-        } catch (IllegalArgumentException e) {
-            //the match need both a home team name and a away team name.
+        // check that there is no ongoing games with eighter of the teams
+        if (getMatch(match.getHomeTeam()) == null && getMatch(match.getHomeTeam()) == null) {
+            try {
+                this.scoreboardList.add(match);
+            } catch (IllegalArgumentException e) {
+                // the match need both a home team name and a away team name.
+                // TODO: add information text in application
+            }
+        } else {
+            // TODO: add information text in application
         }
 
     }
@@ -44,13 +60,12 @@ public class ScoreBoard {
         return result;
     }
 
-    // let index be in the "normal" way of counting (starting in 1), not in
-    // data-index (starting in 0), to make it more user-friendly
-    public void stopMatch(int index) {
-        if (index >= 1 && index <= this.scoreboardList.size()) {
-            this.scoreboardList.remove(index - 1);
+    public void stopMatch(String nameOfTeam) {
+        Match matchToStop = getMatch(nameOfTeam);
+        if (matchToStop != null) {
+            this.scoreboardList.remove(matchToStop);
         } else {
-            System.out.println("There isn't any match on the given index: " + index);
+            // TODO: add information text in application
         }
     }
 

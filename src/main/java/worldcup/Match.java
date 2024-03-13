@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
-    private static int idCounter = 1;
-    private int id;
     private String homeTeam;
     private String awayTeam;
     private int homeTeamPoints;
@@ -13,8 +11,6 @@ public class Match {
 
     public Match(String homeTeam, String awayTeam) {
         if (homeTeam != "" && awayTeam != "") {
-            this.id = idCounter;
-            idCounter += 1;
             this.homeTeam = homeTeam;
             this.awayTeam = awayTeam;
             this.homeTeamPoints = 0;
