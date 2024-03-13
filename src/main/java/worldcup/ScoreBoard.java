@@ -22,17 +22,17 @@ public class ScoreBoard {
         return null;
     }
 
-    public Match getMatchOnIndex(int index){
-        if(index<this.scoreboardList.size()){
+    public Match getMatchOnIndex(int index) {
+        if (index < this.scoreboardList.size()) {
             return this.scoreboardList.get(index);
-        } else{
+        } else {
             return null;
         }
     }
 
     public void addMatch(Match match) {
         // check that there is no ongoing games with eighter of the teams
-        if (getMatch(match.getHomeTeam()) == null && getMatch(match.getHomeTeam()) == null) {
+        if (getMatch(match.getHomeTeam()) == null && getMatch(match.getAwayTeam()) == null) {
             try {
                 this.scoreboardList.add(match);
             } catch (IllegalArgumentException e) {
