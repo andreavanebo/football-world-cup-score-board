@@ -11,10 +11,15 @@ public class Match {
 
     public Match(String homeTeam, String awayTeam) {
         if (homeTeam != "" && awayTeam != "") {
-            this.homeTeam = homeTeam;
-            this.awayTeam = awayTeam;
-            this.homeTeamPoints = 0;
-            this.awayTeamPoints = 0;
+            if (homeTeam != awayTeam) {
+                this.homeTeam = homeTeam;
+                this.awayTeam = awayTeam;
+                this.homeTeamPoints = 0;
+                this.awayTeamPoints = 0;
+            } else {
+                throw new IllegalArgumentException("Home team name and away team name can not be the same.");
+            }
+
         } else {
             throw new IllegalArgumentException("Both home team and away team need to have a name.");
         }
