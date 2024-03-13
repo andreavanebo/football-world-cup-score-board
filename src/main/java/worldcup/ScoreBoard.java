@@ -45,6 +45,15 @@ public class ScoreBoard {
         return this.scoreboardList.size();
     }
 
+    public void stopMatch(String nameOfTeam) {
+        Match matchToStop = getMatch(nameOfTeam);
+        if (matchToStop != null) {
+            this.scoreboardList.remove(matchToStop);
+        } else {
+            throw new IllegalArgumentException("It is no ongoing match with the given team name " + nameOfTeam);
+        }
+    }
+
     public ScoreBoard getScoreBoard() {
         ScoreBoard result = new ScoreBoard();
         for (int i = 0; i < this.scoreboardList.size(); i++) {
@@ -62,16 +71,8 @@ public class ScoreBoard {
         for (int i = 0; i < getNumberOfMatches(); i++) {
             resultString += orderedScoreBoard.getMatchOnIndex(i).getMatchString() + "\n";
         }
-        return resultString;
-    }
-
-    public void stopMatch(String nameOfTeam) {
-        Match matchToStop = getMatch(nameOfTeam);
-        if (matchToStop != null) {
-            this.scoreboardList.remove(matchToStop);
-        } else {
-            throw new IllegalArgumentException("It is no ongoing match with the given team name.");
-        }
+        // remove last \n
+        return resultString.substring(0, resultString.length() - 1);
     }
 
 }
