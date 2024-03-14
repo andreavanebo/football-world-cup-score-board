@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class scoreboardTests {
+public class ScoreboardTests {
 
     private ScoreBoard scoreboard;
     private Match match1;
