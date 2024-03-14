@@ -71,7 +71,7 @@ public class scoreboardController {
         String teamName = addGoalScoringTeamInput.getText();
         Match match = this.scoreBoard.getMatch(teamName);
         if (match != null) {
-            if (match.getHomeTeam().equals(teamName)) {
+            if (match.getHomeTeam().toLowerCase().equals(teamName.toLowerCase())) {
                 match.homeTeamScores();
             } else {
                 match.awayTeamScores();
@@ -80,7 +80,7 @@ public class scoreboardController {
             addGoalScoringTeamInput.setText("");
             errorFieldAddGoal.setText("");
         } else {
-            errorFieldAddGoal.setText("There is no ongoing match with the team " + teamName);
+            errorFieldAddGoal.setText("There is no ongoing match with the team \"" + teamName + "\"");
         }
 
     }
@@ -94,7 +94,7 @@ public class scoreboardController {
             stopMatchTeamInput.setText("");
             errorFieldStopMatch.setText("");
         } catch (IllegalArgumentException e) {
-            errorFieldStopMatch.setText("There is no ongoing match with the team " + teamName);
+            errorFieldStopMatch.setText("There is no ongoing match with the team \"" + teamName + "\"");
         }
 
     }
