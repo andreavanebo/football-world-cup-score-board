@@ -10,6 +10,7 @@ public class Match {
     private int awayTeamPoints;
 
     public Match(String homeTeam, String awayTeam) {
+        // A team name can neighter be empty or only whitespace
         if (!homeTeam.equals("") && !awayTeam.equals("") && homeTeam.trim().length() > 0
                 && awayTeam.trim().length() > 0) {
             if (homeTeam != awayTeam) {

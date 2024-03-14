@@ -12,6 +12,10 @@ public class ScoreBoard {
         this.scoreboardList = new ArrayList<>();
     }
 
+    public int getNumberOfMatches() {
+        return this.scoreboardList.size();
+    }
+
     public Match getMatch(String nameOfTeam) {
         for (int i = 0; i < this.scoreboardList.size(); i++) {
             Match match = this.scoreboardList.get(i);
@@ -39,10 +43,6 @@ public class ScoreBoard {
             throw new IllegalArgumentException("Team already in the scoreboard.");
         }
 
-    }
-
-    public int getNumberOfMatches() {
-        return this.scoreboardList.size();
     }
 
     public void stopMatch(String nameOfTeam) {

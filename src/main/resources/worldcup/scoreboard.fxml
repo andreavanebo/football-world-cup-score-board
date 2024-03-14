@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldcup.scoreboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="646.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldcup.scoreboardController">
    <children>
       <Text layoutX="122.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Football World Cup Score Board">
          <font>
@@ -59,9 +59,9 @@
       <Line endX="348.3333435058594" endY="-0.83331298828125" layoutX="111.0" layoutY="266.0" startX="-97.00000762939453" startY="0.166656494140625" />
       <Line endX="348.3333435058594" endY="-0.207122802734375" layoutX="111.0" layoutY="344.0" startX="-97.00000762939453" />
       <Line endX="-241.16668701171875" endY="-36.70710754394531" layoutX="700.0" layoutY="380.0" startX="-241.16668701171875" startY="-114.33332824707031" />
-      <TextArea fx:id="scoreBoardOutputArea" layoutX="20.0" layoutY="390.0" prefHeight="279.0" prefWidth="303.0" />
+      <TextArea fx:id="scoreBoardOutputArea" layoutX="20.0" layoutY="390.0" prefHeight="241.0" prefWidth="303.0" />
       <Text fx:id="errorFieldStartNewMatch" fill="RED" layoutX="295.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="303.33333333333337" />
-      <Text fx:id="errorFieldAddGoal" fill="RED" layoutX="115.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="261.2449111938476" />
+      <Text fx:id="errorFieldAddGoal" fill="RED" layoutX="108.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.91159820556635" />
       <Text fx:id="errorFieldStopMatch" fill="RED" layoutX="143.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="303.33333333333337" />
    </children>
 </AnchorPane>
